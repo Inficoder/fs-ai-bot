@@ -30,7 +30,7 @@ npm --version
 ## 从源码安装
 
 ```bash
-git clone https://github.com/<user>/im-ai-bot.git
+git clone https://github.com/Inficoder/fs-ai-bot.git
 cd im-ai-bot
 npm install
 npm run build
