@@ -1,0 +1,59 @@
+{
+  "name": "im-ai-bot",
+  "version": "0.1.0",
+  "description": "IM AI 辅助平台 — 多平台即时通讯 AI 机器人，支持飞书/DeepSeek",
+  "type": "module",
+  "author": "cicada <inficoder@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "im-ai-bot": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "web-dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "build:web": "cd src/web && npx vite build",
+    "dev": "tsx watch src/server/index.ts",
+    "dev:web": "cd src/web && npx vite",
+    "start": "node dist/cli/index.js start",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build && npm run build:web"
+  },
+  "keywords": [
+    "feishu",
+    "lark",
+    "deepseek",
+    "ai",
+    "chatbot",
+    "im",
+    "bot",
+    "wechat"
+  ],
+  "dependencies": {
+    "@ant-design/icons": "^6.2.3",
+    "@hono/node-server": "^2.0.4",
+    "@larksuiteoapi/node-sdk": "^1.10.0",
+    "antd": "^6.4.3",
+    "commander": "^12.0.0",
+    "hono": "^4.0.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.15.1",
+    "sql.js": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "tsup": "^8.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.4.0",
+    "vite": "^8.0.14"
+  }
+}
