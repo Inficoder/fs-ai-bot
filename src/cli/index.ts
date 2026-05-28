@@ -29,7 +29,7 @@ function isRunning(pid: number): boolean {
 const program = new Command()
 
 program
-  .name('im-ai-bot')
+  .name('imbot')
   .description('IM AI 辅助平台 — 多平台即时通讯 AI 机器人')
   .version('0.1.0')
 

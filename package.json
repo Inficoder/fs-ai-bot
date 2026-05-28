@@ -13,7 +13,7 @@
     "node": ">=20"
   },
   "bin": {
-    "im-ai-bot": "./dist/cli.js"
+    "imbot": "./dist/cli.js"
   },
   "files": [
     "dist",

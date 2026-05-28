@@ -21,7 +21,7 @@ export const DEFAULT_CONFIG: AppConfig = {
   feishuVerificationToken: '',
   deepseekApiKey: '',
   deepseekBaseUrl: 'https://api.deepseek.com',
-  deepseekModel: 'deepseek-chat',
+  deepseekModel: 'deepseek-v4-flash',
   serpApiKey: '',
   feishuBaseUrl: 'https://open.feishu.cn/open-apis',
   streamThrottleMs: 500,
@@ -40,6 +40,8 @@ export interface Context {
   model: string
   temperature: number
   searchEnabled: boolean
+  mentionOnly: boolean
+  deleted?: number
   createdAt: string
   updatedAt: string
 }

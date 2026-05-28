@@ -11,6 +11,7 @@ import {
   getOrCreateContext,
   listContexts,
   resetContext,
+  updateMentionMode,
   updateModel,
   updateSearch,
   updateSystemPrompt,
@@ -33,6 +34,7 @@ const HELP_TEXT = `**可用命令**
 \`/search [on|off]\` 查看/切换智能搜索
 
 **协作**
+\`/mode [all|mention]\` 切换响应模式
 \`/note <内容>\` 添加备注
 \`/help\` 显示帮助
 
@@ -51,6 +53,7 @@ export async function routeMessage(
   text: string,
   mentionedIds: string[] = [],
   senderId = '',
+  botMentioned = true,
 ): Promise<void> {
   text = text.trim()
   // 去除开头的 @mention
@@ -58,11 +61,21 @@ export async function routeMessage(
 
   if (!text) return
 
+  // 命令始终响应
   if (text.startsWith('/')) {
     await handleCommand(chatId, messageId, text, mentionedIds, senderId)
-  } else {
-    await handleAIChat(chatId, messageId, text)
+    return
   }
+
+  // 需要 @ 模式：未 @ 机器人则不响应
+  const ctx = getContext(chatId)
+  if (ctx?.mentionOnly !== 0 && !botMentioned) {
+    console.log('[Route] 跳过（仅@模式，未@机器人）', { chatId, mentionOnly: ctx?.mentionOnly, botMentioned })
+    return
+  }
+  console.log('[Route] 进入AI对话', { chatId, mentionOnly: ctx?.mentionOnly, botMentioned })
+
+  await handleAIChat(chatId, messageId, text)
 }
 
 async function handleCommand(
@@ -172,6 +185,26 @@ async function handleCommand(
           chatId,
           messageId,
           `智能搜索: ${status}\n使用 \`/search on\` 或 \`/search off\` 切换`,
+        )
+      }
+      break
+    }
+
+    case '/mode': {
+      const ctx = getOrCreateContext(chatId)
+      const value = arg.toLowerCase()
+      if (value === 'all') {
+        updateMentionMode(ctx.id!, false)
+        await replyText(chatId, messageId, '已切换为 **全部消息** 模式，机器人会响应群内所有消息')
+      } else if (value === 'mention') {
+        updateMentionMode(ctx.id!, true)
+        await replyText(chatId, messageId, '已切换为 **仅 @** 模式，机器人只响应 @ 它的消息')
+      } else {
+        const mode = ctx.mentionOnly !== false ? '仅 @（需 @机器人）' : '全部消息'
+        await replyText(
+          chatId,
+          messageId,
+          `当前模式: **${mode}**\n使用 \`/mode all\` 或 \`/mode mention\` 切换`,
         )
       }
       break

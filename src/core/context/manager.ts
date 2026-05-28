@@ -6,8 +6,8 @@ const HISTORY_LIMIT = 50
 
 // 共享的上下文列别名（snake_case → camelCase）
 const CONTEXT_COLS = `id, chat_id AS chatId, name, system_prompt AS systemPrompt,
-  model, temperature, search_enabled AS searchEnabled, deleted,
-  created_at AS createdAt, updated_at AS updatedAt`
+  model, temperature, search_enabled AS searchEnabled, mention_only AS mentionOnly,
+  deleted, created_at AS createdAt, updated_at AS updatedAt`
 
 function ctxCols(prefix?: string): string {
   if (!prefix) return CONTEXT_COLS
@@ -145,6 +145,13 @@ export function updateTemperature(contextId: number, temperature: number): void 
   execute(
     'UPDATE contexts SET temperature = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
     [temperature, contextId],
+  )
+}
+
+export function updateMentionMode(contextId: number, mentionOnly: boolean): void {
+  execute(
+    'UPDATE contexts SET mention_only = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+    [mentionOnly ? 1 : 0, contextId],
   )
 }
 

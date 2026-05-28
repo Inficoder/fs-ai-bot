@@ -27,19 +27,24 @@ export async function startWsClient(): Promise<void> {
     appId: config.feishuAppId,
     appSecret: config.feishuAppSecret,
     includeRawEvent: true,
+    policy: {
+      requireMention: false,
+    },
   })
 
   channel.on('message', async (msg: any) => {
     const chatId = msg.chatId
     const messageId = msg.messageId
     const text = msg.content
-    const mentionedIds: string[] = (msg.mentions ?? [])
+    const mentions: any[] = msg.mentions ?? []
+    const botMentioned = mentions.some((m: any) => m.isBot)
+    const mentionedIds: string[] = mentions
       .filter((m: any) => !m.isBot)
       .map((m: any) => m.id?.open_id)
       .filter(Boolean)
     const senderId = msg.senderId ?? ''
 
-    console.log('[WS] 收到消息:', { chatId, text: text?.substring(0, 50), mentionedIds, senderId })
+    console.log('[WS] 收到消息:', { chatId, text: text?.substring(0, 50), botMentioned })
 
     if (!chatId || !messageId || !text) {
       console.log('[WS] 消息字段不完整:', { chatId, messageId, hasText: !!text })
@@ -47,7 +52,7 @@ export async function startWsClient(): Promise<void> {
     }
 
     chatQueue.enqueue(chatId, () =>
-      routeMessage(chatId, messageId, text, mentionedIds, senderId),
+      routeMessage(chatId, messageId, text, mentionedIds, senderId, botMentioned),
     )
   })
 

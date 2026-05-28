@@ -24,8 +24,10 @@ export async function handleMessageEvent(event: any): Promise<void> {
     const content = JSON.parse(contentStr) as { text?: string }
     const text = content.text ?? ''
 
-    const mentions: Array<{ id: { open_id?: string } }> = event.message?.mentions ?? []
-    const mentionedIds = mentions
+    const rawMentions: any[] = event.message?.mentions ?? []
+    // webhook 事件中第一个 mention 通常是机器人，以此判断是否 @ 了机器人
+    const botMentioned = rawMentions.length > 0
+    const mentionedIds = rawMentions
       .map((m: any) => m.id?.open_id)
       .filter(Boolean)
       .slice(1) as string[] // skip first mention (bot) — raw events lack isBot flag
@@ -37,10 +39,10 @@ export async function handleMessageEvent(event: any): Promise<void> {
       return
     }
 
-    console.log('[Handler] 入队:', { chatId, text: text.substring(0, 50) })
+    console.log('[Handler] 入队:', { chatId, text: text.substring(0, 50), botMentioned })
 
     chatQueue.enqueue(chatId, () =>
-      routeMessage(chatId, messageId, text, mentionedIds, senderId),
+      routeMessage(chatId, messageId, text, mentionedIds, senderId, botMentioned),
     )
   } catch (err) {
     console.error('[Handler] 解析消息失败:', err)

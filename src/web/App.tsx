@@ -1,9 +1,13 @@
+import { useState } from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, Button, theme } from 'antd'
 import {
   DashboardOutlined,
   SettingOutlined,
   MessageOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  RobotOutlined,
 } from '@ant-design/icons'
 import Dashboard from './pages/Dashboard'
 import Config from './pages/Config'
@@ -18,32 +22,58 @@ const menuItems = [
 ]
 
 export default function App() {
+  const [collapsed, setCollapsed] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
+  const { token } = theme.useToken()
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider>
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        breakpoint="lg"
+        style={{ background: token.colorBgContainer, borderRight: `1px solid ${token.colorBorderSecondary}` }}
+      >
         <div style={{
-          color: '#fff',
-          textAlign: 'center',
-          padding: '16px',
-          fontWeight: 'bold',
-          fontSize: 16,
-          borderBottom: '1px solid rgba(255,255,255,0.1)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+          padding: collapsed ? '20px 16px' : '20px 24px',
+          color: token.colorPrimary,
+          fontWeight: 700,
+          fontSize: collapsed ? 20 : 18,
+          whiteSpace: 'nowrap',
+          borderBottom: `1px solid ${token.colorBorderSecondary}`,
         }}>
-          飞书 AI 管理
+          <RobotOutlined style={{ fontSize: 22 }} />
+          {!collapsed && 'IM AI Bot'}
         </div>
         <Menu
-          theme="dark"
+          theme="light"
           mode="inline"
           selectedKeys={[location.pathname]}
           items={menuItems}
           onClick={({ key }) => navigate(key)}
+          style={{ borderInlineEnd: 'none' }}
         />
       </Sider>
       <Layout>
-        <Content style={{ margin: 24 }}>
+        <Header style={{
+          background: token.colorBgContainer,
+          padding: '0 24px',
+          display: 'flex',
+          alignItems: 'center',
+          borderBottom: `1px solid ${token.colorBorderSecondary}`,
+        }}>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+          />
+        </Header>
+        <Content style={{ margin: 24, minHeight: 280 }}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/config" element={<Config />} />

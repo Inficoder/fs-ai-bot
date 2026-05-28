@@ -1,5 +1,6 @@
 export const MIGRATIONS = [
   `ALTER TABLE contexts ADD COLUMN deleted INTEGER NOT NULL DEFAULT 0`,
+  `ALTER TABLE contexts ADD COLUMN mention_only INTEGER NOT NULL DEFAULT 1`,
 ]
 
 export const SCHEMA_SQL = `

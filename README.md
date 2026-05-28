@@ -1,12 +1,12 @@
-# im-ai-bot
+# imbot
 
 多平台即时通讯 AI 机器人，支持飞书 + DeepSeek，流式卡片回复。
 
 ## 快速开始
 
 ```bash
-npm install -g im-ai-bot
-im-ai-bot start
+npm install -g imbot
+imbot start
 ```
 
 浏览器打开 `http://localhost:8000` 填写飞书和 DeepSeek 配置。
@@ -31,7 +31,7 @@ npm --version
 
 ```bash
 git clone https://github.com/Inficoder/fs-ai-bot.git
-cd im-ai-bot
+cd fs-ai-bot
 npm install
 npm run build
 npm run build:web
@@ -101,7 +101,7 @@ npm start
 | API 地址（飞书） | 否 | 默认 `https://open.feishu.cn/open-apis` |
 | API Key | 是 | DeepSeek 平台申请的 Key |
 | API 地址（DeepSeek） | 否 | 默认 `https://api.deepseek.com` |
-| 模型 | 否 | 默认 `deepseek-chat`，可选 `deepseek-reasoner` 等 |
+| 模型 | 否 | 默认 `deepseek-v4-flash`，可选 `deepseek-reasoner` 等 |
 | SerpAPI Key | 否 | 联网搜索需要，[serpapi.com](https://serpapi.com) |
 | 刷新间隔 | 否 | 流式卡片更新间隔(ms)，默认 500 |
 | HTTP 端口 | 否 | 默认 8000 |
@@ -113,10 +113,10 @@ npm start
 ## CLI 命令
 
 ```bash
-im-ai-bot start              # 启动服务
-im-ai-bot start -p 8080      # 指定端口
-im-ai-bot stop               # 停止服务
-im-ai-bot status             # 查看状态
+imbot start              # 启动服务
+imbot start -p 8080      # 指定端口
+imbot stop               # 停止服务
+imbot status             # 查看状态
 ```
 
 ---
@@ -131,6 +131,7 @@ im-ai-bot status             # 查看状态
 | `/model [名称]` | 查看/切换模型 |
 | `/temp <0.0-2.0>` | 调整创意度 |
 | `/search [on\|off]` | 开启/关闭智能搜索 |
+| `/mode [all\|mention]` | 切换响应模式（all=全部消息，mention=仅@） |
 | `/create <名称>` | 创建新群聊 |
 | `/reset` | 清空对话历史 |
 | `/list` | 列出所有活跃对话 |
@@ -154,7 +155,7 @@ AI 回复以消息卡片形式逐段展示：发送后立即出现「思考中..
 确认应用已发布、已添加到群、事件配置已保存。
 
 **Q: 如何修改端口？**  
-Web 配置页面修改或 `im-ai-bot start -p 8080`。
+Web 配置页面修改或 `imbot start -p 8080`。
 
 **Q: 如何查看日志？**  
 前台运行时直接看控制台输出，后台运行时日志写入 `data/server.log`。
