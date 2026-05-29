@@ -7,8 +7,8 @@ import { fileURLToPath } from 'node:url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DATA_DIR = path.resolve(__dirname, '..', 'data')
-const PID_PATH = path.join(DATA_DIR, 'im-bot.pid')
-const LOG_PATH = path.join(DATA_DIR, 'im-bot.log')
+const PID_PATH = path.join(DATA_DIR, 'fsbot.pid')
+const LOG_PATH = path.join(DATA_DIR, 'fsbot.log')
 
 function readPid(): number | null {
   try {
@@ -31,7 +31,7 @@ function isRunning(pid: number): boolean {
 const program = new Command()
 
 program
-  .name('im-bot')
+  .name('fsbot')
   .description('IM AI 辅助平台 — 多平台即时通讯 AI 机器人')
   .version('0.1.0')
 
