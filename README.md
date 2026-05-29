@@ -1,12 +1,12 @@
-# fsbot
+# imbot-cli
 
 多平台即时通讯 AI 机器人，支持飞书 + DeepSeek，流式卡片回复。
 
 ## 快速开始
 
 ```bash
-npm install -g fsbot
-fsbot start
+npm install -g imbot-cli
+imbot-cli start
 ```
 
 浏览器打开 `http://localhost:8000` 填写飞书和 DeepSeek 配置。
@@ -113,14 +113,14 @@ npm start
 ## CLI 命令
 
 ```bash
-fsbot start              # 启动服务（前台）
-fsbot start -d           # 后台启动
-fsbot start -p 8080      # 指定端口
-fsbot stop               # 停止服务
-fsbot status             # 查看状态
-fsbot logs               # 查看最近 50 行日志
-fsbot logs -f            # 实时跟踪日志
-fsbot logs -n 100        # 查看最近 100 行
+imbot-cli start              # 启动服务（前台）
+imbot-cli start -d           # 后台启动
+imbot-cli start -p 8080      # 指定端口
+imbot-cli stop               # 停止服务
+imbot-cli status             # 查看状态
+imbot-cli logs               # 查看最近 50 行日志
+imbot-cli logs -f            # 实时跟踪日志
+imbot-cli logs -n 100        # 查看最近 100 行
 ```
 
 ---
@@ -159,7 +159,7 @@ AI 回复以消息卡片形式逐段展示：发送后立即出现「思考中..
 确认应用已发布、已添加到群、事件配置已保存。
 
 **Q: 如何修改端口？**  
-Web 配置页面修改或 `fsbot start -p 8080`。
+Web 配置页面修改或 `imbot-cli start -p 8080`。
 
 **Q: 如何查看日志？**  
-前台运行时直接看控制台输出。后台运行时日志写入 `data/fsbot.log`，可用 `fsbot logs` 或 `fsbot logs -f` 查看。
+前台运行时直接看控制台输出。后台运行时日志写入 `data/imbot-cli.log`，可用 `imbot-cli logs` 或 `imbot-cli logs -f` 查看。
