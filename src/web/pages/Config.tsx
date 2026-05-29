@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Form, Input, InputNumber, Button, message, Spin, Space, Affix, theme, Collapse } from 'antd'
+import { Form, Input, InputNumber, Button, message, Spin, Space, theme, Collapse } from 'antd'
 import {
   SaveOutlined,
   ApiOutlined,
@@ -182,25 +182,26 @@ export default function Config() {
           items={collapseItems}
         />
 
-        <Affix offsetBottom={24}>
-          <div style={{
-            marginTop: 24,
-            padding: '16px 24px',
-            background: token.colorBgContainer,
-            borderRadius: token.borderRadiusLG,
-            boxShadow: token.boxShadowSecondary,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
-            <span style={{ color: token.colorTextSecondary }}>
-              修改后自动重连，无需手动重启
-            </span>
-            <Button type="primary" htmlType="submit" loading={saving} icon={<SaveOutlined />} size="large">
-              保存配置
-            </Button>
-          </div>
-        </Affix>
+        <div style={{
+          position: 'sticky',
+          bottom: 24,
+          marginTop: 24,
+          padding: '16px 24px',
+          background: token.colorBgContainer,
+          borderRadius: token.borderRadiusLG,
+          boxShadow: token.boxShadowSecondary,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          zIndex: 1,
+        }}>
+          <span style={{ color: token.colorTextSecondary }}>
+            修改后自动重连，无需手动重启
+          </span>
+          <Button type="primary" htmlType="submit" loading={saving} icon={<SaveOutlined />} size="large">
+            保存配置
+          </Button>
+        </div>
       </Form>
     </div>
   )
