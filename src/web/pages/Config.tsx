@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Card, Form, Input, InputNumber, Button, message, Spin, Typography, Space, Affix, theme, Collapse } from 'antd'
+import { Form, Input, InputNumber, Button, message, Spin, Typography, Space, Affix, theme, Collapse } from 'antd'
 import {
   SaveOutlined,
   ApiOutlined,
@@ -178,15 +178,13 @@ export default function Config() {
 
   return (
     <div style={{ maxWidth: 720 }}>
-      <Title level={4} style={{ marginBottom: 24 }}>配置管理</Title>
+      <Title level={4} style={{ marginBottom: 16 }}>配置管理</Title>
 
       <Form form={form} layout="vertical" onFinish={handleSave}>
-        <Card>
-          <Collapse
-            defaultActiveKey={['feishu', 'deepseek']}
-            items={collapseItems}
-          />
-        </Card>
+        <Collapse
+          defaultActiveKey={['feishu', 'deepseek']}
+          items={collapseItems}
+        />
 
         <Affix offsetBottom={24}>
           <div style={{

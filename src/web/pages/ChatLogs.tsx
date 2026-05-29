@@ -20,9 +20,9 @@ export default function ChatLogs() {
 
   return (
     <div>
-      <Title level={4} style={{ marginBottom: 24 }}>对话日志</Title>
+      <Title level={4} style={{ marginBottom: 16 }}>对话日志</Title>
 
-      <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+      <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
         <Col xs={12} sm={8}>
           <Card hoverable>
             <Statistic title="活跃群组" value={status?.activeChats ?? 0} prefix={<TeamOutlined />} />
@@ -36,9 +36,9 @@ export default function ChatLogs() {
       </Row>
 
       <Card>
-        <div style={{ textAlign: 'center', padding: '40px 0' }}>
-          <InboxOutlined style={{ fontSize: 56, color: token.colorBorderSecondary }} />
-          <Title level={5} style={{ marginTop: 16 }}>详细日志即将上线</Title>
+        <div style={{ textAlign: 'center', padding: '24px 0' }}>
+          <InboxOutlined style={{ fontSize: 48, color: token.colorBorderSecondary }} />
+          <Title level={5} style={{ marginTop: 12, marginBottom: 8 }}>详细日志即将上线</Title>
           <Paragraph type="secondary">
             按群组查看完整对话历史、搜索消息内容、导出聊天记录等功能开发中
           </Paragraph>

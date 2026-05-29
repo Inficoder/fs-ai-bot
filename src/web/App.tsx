@@ -129,7 +129,7 @@ export default function App() {
             />
           )}
         </Header>
-        <Content style={{ margin: 24, minHeight: 280 }}>
+        <Content style={{ padding: '16px 24px', minHeight: 280 }}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/config" element={<Config />} />

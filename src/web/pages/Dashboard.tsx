@@ -52,7 +52,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <Title level={4} style={{ marginBottom: 24 }}>概览</Title>
+      <Title level={4} style={{ marginBottom: 16 }}>概览</Title>
 
       <Row gutter={[16, 16]}>
         <Col xs={12} sm={6}>
@@ -99,7 +99,7 @@ export default function Dashboard() {
         </Col>
       </Row>
 
-      <Card style={{ marginTop: 24 }}>
+      <Card style={{ marginTop: 16 }}>
         <Tabs
           defaultActiveKey="active"
           items={[
@@ -135,7 +135,7 @@ export default function Dashboard() {
         />
       </Card>
 
-      <div style={{ marginTop: 24 }}>
+      <div style={{ marginTop: 16 }}>
         {status?.configValid ? (
           <Alert
             type="success"

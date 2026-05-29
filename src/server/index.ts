@@ -9,6 +9,7 @@ import { handleMessageEvent } from '../core/bot/handler.js'
 import { onChatDisbanded } from '../core/context/manager.js'
 import { configRouter } from './api/config.js'
 import { statusRouter } from './api/status.js'
+import fs from 'node:fs'
 import path from 'node:path'
 
 const app = new Hono()
@@ -60,16 +61,21 @@ app.post('/webhook/event', async (c) => {
 })
 
 // Serve static frontend (assets only via serveStatic)
-const webDistPath = path.resolve(import.meta.dirname, '..', 'web-dist')
-app.use('/assets/*', serveStatic({ root: webDistPath }))
+// In dev (tsx), __dirname is src/server/; in prod (tsup bundled) it's dist/
+let webDistPath = path.resolve(import.meta.dirname, '..', 'web-dist')
+if (!fs.existsSync(webDistPath)) {
+  webDistPath = path.resolve(import.meta.dirname, '../../web-dist')
+}
+if (fs.existsSync(webDistPath)) {
+  app.use('/assets/*', serveStatic({ root: webDistPath }))
+}
 
 // Fallback to index.html for SPA routing (not API routes)
-app.get('/*', async (c) => {
+app.get('/*', (c) => {
   if (c.req.path.startsWith('/api/')) return c.json({ error: 'Not Found' }, 404)
-  const { readFileSync, existsSync } = await import('node:fs')
   const indexPath = path.join(webDistPath, 'index.html')
-  if (existsSync(indexPath)) {
-    return c.html(readFileSync(indexPath, 'utf-8'))
+  if (fs.existsSync(indexPath)) {
+    return c.html(fs.readFileSync(indexPath, 'utf-8'))
   }
   return c.json({ error: 'Not Found' }, 404)
 })
@@ -106,4 +112,10 @@ export async function stopServer(): Promise<void> {
     serverInstance.close()
     serverInstance = null
   }
+}
+
+// 直接运行时启动服务 (tsx src/server/index.ts / npm run dev)
+const runningPath = process.argv[1]?.replace(/\\/g, '/')
+if (runningPath?.includes('/src/server/index')) {
+  startServer()
 }
