@@ -113,10 +113,14 @@ npm start
 ## CLI 命令
 
 ```bash
-imbot start              # 启动服务
+imbot start              # 启动服务（前台）
+imbot start -d           # 后台启动
 imbot start -p 8080      # 指定端口
 imbot stop               # 停止服务
 imbot status             # 查看状态
+imbot logs               # 查看最近 50 行日志
+imbot logs -f            # 实时跟踪日志
+imbot logs -n 100        # 查看最近 100 行
 ```
 
 ---
@@ -158,4 +162,4 @@ AI 回复以消息卡片形式逐段展示：发送后立即出现「思考中..
 Web 配置页面修改或 `imbot start -p 8080`。
 
 **Q: 如何查看日志？**  
-前台运行时直接看控制台输出，后台运行时日志写入 `data/server.log`。
+前台运行时直接看控制台输出。后台运行时日志写入 `data/imbot.log`，可用 `imbot logs` 或 `imbot logs -f` 查看。
