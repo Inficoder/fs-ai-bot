@@ -1,12 +1,12 @@
-# imbot
+# imai
 
 多平台即时通讯 AI 机器人，支持飞书 + DeepSeek，流式卡片回复。
 
 ## 快速开始
 
 ```bash
-npm install -g imbot
-imbot start
+npm install -g imai
+imai start
 ```
 
 浏览器打开 `http://localhost:8000` 填写飞书和 DeepSeek 配置。
@@ -113,14 +113,14 @@ npm start
 ## CLI 命令
 
 ```bash
-imbot start              # 启动服务（前台）
-imbot start -d           # 后台启动
-imbot start -p 8080      # 指定端口
-imbot stop               # 停止服务
-imbot status             # 查看状态
-imbot logs               # 查看最近 50 行日志
-imbot logs -f            # 实时跟踪日志
-imbot logs -n 100        # 查看最近 100 行
+imai start              # 启动服务（前台）
+imai start -d           # 后台启动
+imai start -p 8080      # 指定端口
+imai stop               # 停止服务
+imai status             # 查看状态
+imai logs               # 查看最近 50 行日志
+imai logs -f            # 实时跟踪日志
+imai logs -n 100        # 查看最近 100 行
 ```
 
 ---
@@ -159,7 +159,7 @@ AI 回复以消息卡片形式逐段展示：发送后立即出现「思考中..
 确认应用已发布、已添加到群、事件配置已保存。
 
 **Q: 如何修改端口？**  
-Web 配置页面修改或 `imbot start -p 8080`。
+Web 配置页面修改或 `imai start -p 8080`。
 
 **Q: 如何查看日志？**  
-前台运行时直接看控制台输出。后台运行时日志写入 `data/imbot.log`，可用 `imbot logs` 或 `imbot logs -f` 查看。
+前台运行时直接看控制台输出。后台运行时日志写入 `data/imai.log`，可用 `imai logs` 或 `imai logs -f` 查看。

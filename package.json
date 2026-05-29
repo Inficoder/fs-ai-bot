@@ -1,6 +1,6 @@
 {
-  "name": "im-ai-bot",
-  "version": "0.1.1",
+  "name": "imai",
+  "version": "0.1.2",
   "description": "IM AI 辅助平台 — 多平台即时通讯 AI 机器人，支持飞书/DeepSeek",
   "type": "module",
   "author": "cicada <inficoder@gmail.com>",
@@ -13,7 +13,7 @@
     "node": ">=20"
   },
   "bin": {
-    "imbot": "./dist/cli.js"
+    "imai": "./dist/cli.js"
   },
   "files": [
     "dist",
@@ -24,7 +24,7 @@
     "build:web": "cd src/web && npx vite build",
     "dev": "tsx watch src/server/index.ts",
     "dev:web": "cd src/web && npx vite",
-    "start": "node dist/cli/index.js start",
+    "start": "node dist/cli.js start",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build && npm run build:web"
   },
