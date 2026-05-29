@@ -1,5 +1,5 @@
 {
-  "name": "imai",
+  "name": "im-bot",
   "version": "0.1.2",
   "description": "IM AI 辅助平台 — 多平台即时通讯 AI 机器人，支持飞书/DeepSeek",
   "type": "module",
@@ -13,7 +13,7 @@
     "node": ">=20"
   },
   "bin": {
-    "imai": "./dist/cli.js"
+    "im-bot": "./dist/cli.js"
   },
   "files": [
     "dist",
