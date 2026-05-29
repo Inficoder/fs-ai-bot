@@ -6,7 +6,6 @@ import {
   RobotOutlined,
   SearchOutlined,
   SettingOutlined,
-  ClockCircleOutlined,
   CloudServerOutlined,
 } from '@ant-design/icons'
 import { getConfig, saveConfig, type AppConfig } from '../api'
@@ -66,12 +65,14 @@ export default function Config() {
 
   if (loading) return <Spin size="large" style={{ display: 'block', margin: '120px auto' }} />
 
+  const iconStyle = { color: token.colorPrimary }
+
   const collapseItems = [
     {
       key: 'feishu',
       label: (
         <Space>
-          <ApiOutlined style={{ color: token.colorPrimary }} />
+          <ApiOutlined style={iconStyle} />
           <span>Feishu 配置</span>
         </Space>
       ),
@@ -99,7 +100,7 @@ export default function Config() {
       key: 'deepseek',
       label: (
         <Space>
-          <RobotOutlined style={{ color: token.colorPrimary }} />
+          <RobotOutlined style={iconStyle} />
           <span>DeepSeek 配置</span>
         </Space>
       ),
@@ -123,7 +124,7 @@ export default function Config() {
       key: 'serp',
       label: (
         <Space>
-          <SearchOutlined style={{ color: token.colorPrimary }} />
+          <SearchOutlined style={iconStyle} />
           <span>联网搜索 (SerpAPI)</span>
         </Space>
       ),
@@ -138,7 +139,7 @@ export default function Config() {
       key: 'stream',
       label: (
         <Space>
-          <SettingOutlined style={{ color: token.colorPrimary }} />
+          <SettingOutlined style={iconStyle} />
           <span>流式输出与超时</span>
         </Space>
       ),
@@ -163,7 +164,7 @@ export default function Config() {
       key: 'server',
       label: (
         <Space>
-          <CloudServerOutlined style={{ color: token.colorPrimary }} />
+          <CloudServerOutlined style={iconStyle} />
           <span>服务端口</span>
         </Space>
       ),
@@ -180,11 +181,12 @@ export default function Config() {
       <Title level={4} style={{ marginBottom: 24 }}>配置管理</Title>
 
       <Form form={form} layout="vertical" onFinish={handleSave}>
-        <Collapse
-          defaultActiveKey={['feishu', 'deepseek']}
-          items={collapseItems}
-          style={{ background: token.colorBgContainer }}
-        />
+        <Card>
+          <Collapse
+            defaultActiveKey={['feishu', 'deepseek']}
+            items={collapseItems}
+          />
+        </Card>
 
         <Affix offsetBottom={24}>
           <div style={{

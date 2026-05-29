@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
-import { Layout, Menu, Button, theme } from 'antd'
+import { Layout, Menu, Button, Grid, Drawer, Typography, Flex, theme } from 'antd'
 import {
   DashboardOutlined,
   SettingOutlined,
@@ -14,6 +14,7 @@ import Config from './pages/Config'
 import ChatLogs from './pages/ChatLogs'
 
 const { Header, Sider, Content } = Layout
+const { useBreakpoint } = Grid
 
 const menuItems = [
   { key: '/', icon: <DashboardOutlined />, label: '仪表盘' },
@@ -21,57 +22,112 @@ const menuItems = [
   { key: '/logs', icon: <MessageOutlined />, label: '对话日志' },
 ]
 
+function BrandLogo({ collapsed }: { collapsed: boolean }) {
+  const { token } = theme.useToken()
+  return (
+    <Flex align="center" gap={12} style={{
+      padding: collapsed ? '20px 16px' : '20px 24px',
+      whiteSpace: 'nowrap',
+      borderBottom: `1px solid ${token.colorBorderSecondary}`,
+      marginBottom: 4,
+    }}>
+      <RobotOutlined style={{ fontSize: 22, color: token.colorPrimary }} />
+      {!collapsed && (
+        <Typography.Text strong style={{ fontSize: 17 }}>
+          FS Bot
+        </Typography.Text>
+      )}
+    </Flex>
+  )
+}
+
 export default function App() {
   const [collapsed, setCollapsed] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const screens = useBreakpoint()
   const navigate = useNavigate()
   const location = useLocation()
   const { token } = theme.useToken()
 
+  const isMobile = !screens.lg
+
+  const onCollapse = useCallback((val: boolean) => {
+    setCollapsed(val)
+  }, [])
+
+  const menuNode = (
+    <>
+      <BrandLogo collapsed={collapsed && !isMobile} />
+      <Menu
+        mode="inline"
+        selectedKeys={[location.pathname]}
+        items={menuItems}
+        onClick={({ key }) => {
+          navigate(key)
+          if (isMobile) setDrawerOpen(false)
+        }}
+        style={{ borderInlineEnd: 'none' }}
+      />
+    </>
+  )
+
+  const siderStyle: React.CSSProperties = {
+    background: token.colorBgContainer,
+    borderRight: `1px solid ${token.colorBorderSecondary}`,
+  }
+
+  const headerStyle: React.CSSProperties = {
+    background: token.colorBgContainer,
+    padding: '0 24px',
+    display: 'flex',
+    alignItems: 'center',
+    borderBottom: `1px solid ${token.colorBorderSecondary}`,
+    height: 56,
+  }
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider
-        trigger={null}
-        collapsible
-        collapsed={collapsed}
-        breakpoint="lg"
-        style={{ background: token.colorBgContainer, borderRight: `1px solid ${token.colorBorderSecondary}` }}
-      >
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 12,
-          padding: collapsed ? '20px 16px' : '20px 24px',
-          color: token.colorPrimary,
-          fontWeight: 700,
-          fontSize: collapsed ? 20 : 18,
-          whiteSpace: 'nowrap',
-          borderBottom: `1px solid ${token.colorBorderSecondary}`,
-        }}>
-          <RobotOutlined style={{ fontSize: 22 }} />
-          {!collapsed && 'IM AI Bot'}
-        </div>
-        <Menu
-          theme="light"
-          mode="inline"
-          selectedKeys={[location.pathname]}
-          items={menuItems}
-          onClick={({ key }) => navigate(key)}
-          style={{ borderInlineEnd: 'none' }}
-        />
-      </Sider>
+      {!isMobile && (
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          onCollapse={onCollapse}
+          width={220}
+          style={siderStyle}
+        >
+          {menuNode}
+        </Sider>
+      )}
+
+      {isMobile && (
+        <Drawer
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+          placement="left"
+          width={220}
+          styles={{ body: { padding: 0 } }}
+          closable={false}
+        >
+          {menuNode}
+        </Drawer>
+      )}
+
       <Layout>
-        <Header style={{
-          background: token.colorBgContainer,
-          padding: '0 24px',
-          display: 'flex',
-          alignItems: 'center',
-          borderBottom: `1px solid ${token.colorBorderSecondary}`,
-        }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-          />
+        <Header style={headerStyle}>
+          {isMobile ? (
+            <Button
+              type="text"
+              icon={<MenuUnfoldOutlined />}
+              onClick={() => setDrawerOpen(true)}
+            />
+          ) : (
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+            />
+          )}
         </Header>
         <Content style={{ margin: 24, minHeight: 280 }}>
           <Routes>

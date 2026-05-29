@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Result, Spin, Typography, Card, Statistic, Row, Col, theme } from 'antd'
-import { MessageOutlined, TeamOutlined } from '@ant-design/icons'
+import { Card, Spin, Typography, Row, Col, Statistic, theme } from 'antd'
+import { MessageOutlined, TeamOutlined, InboxOutlined } from '@ant-design/icons'
 import { getStatus, type ServiceStatus } from '../api'
 
-const { Title } = Typography
+const { Title, Paragraph } = Typography
 
 export default function ChatLogs() {
   const [loading, setLoading] = useState(true)
@@ -24,23 +24,25 @@ export default function ChatLogs() {
 
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
         <Col xs={12} sm={8}>
-          <Card>
+          <Card hoverable>
             <Statistic title="活跃群组" value={status?.activeChats ?? 0} prefix={<TeamOutlined />} />
           </Card>
         </Col>
         <Col xs={12} sm={8}>
-          <Card>
+          <Card hoverable>
             <Statistic title="总消息数" value={status?.totalMessages ?? 0} prefix={<MessageOutlined />} />
           </Card>
         </Col>
       </Row>
 
       <Card>
-        <Result
-          icon={<MessageOutlined style={{ color: token.colorPrimary }} />}
-          title="详细日志即将上线"
-          subTitle="按群组查看完整对话历史、搜索消息内容、导出聊天记录等功能开发中"
-        />
+        <div style={{ textAlign: 'center', padding: '40px 0' }}>
+          <InboxOutlined style={{ fontSize: 56, color: token.colorBorderSecondary }} />
+          <Title level={5} style={{ marginTop: 16 }}>详细日志即将上线</Title>
+          <Paragraph type="secondary">
+            按群组查看完整对话历史、搜索消息内容、导出聊天记录等功能开发中
+          </Paragraph>
+        </div>
       </Card>
     </div>
   )
