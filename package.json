@@ -1,6 +1,6 @@
 {
   "name": "im-ai-bot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "IM AI 辅助平台 — 多平台即时通讯 AI 机器人，支持飞书/DeepSeek",
   "type": "module",
   "author": "cicada <inficoder@gmail.com>",
