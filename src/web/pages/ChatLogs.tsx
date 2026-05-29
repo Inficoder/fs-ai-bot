@@ -20,8 +20,6 @@ export default function ChatLogs() {
 
   return (
     <div>
-      <Title level={4} style={{ marginBottom: 16 }}>对话日志</Title>
-
       <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
         <Col xs={12} sm={8}>
           <Card hoverable>

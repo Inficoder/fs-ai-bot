@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Card, Row, Col, Statistic, Tag, Spin, Table, Tabs, Typography, theme, Alert } from 'antd'
+import { Card, Row, Col, Statistic, Tag, Spin, Table, Tabs, theme, Alert } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import {
   CheckCircleOutlined,
@@ -10,8 +10,6 @@ import {
   SearchOutlined,
 } from '@ant-design/icons'
 import { getStatus, getContexts, getDeletedContexts, type ServiceStatus, type ContextRecord } from '../api'
-
-const { Title } = Typography
 
 type ContextRow = ContextRecord & { messageCount: number }
 
@@ -52,8 +50,6 @@ export default function Dashboard() {
 
   return (
     <div>
-      <Title level={4} style={{ marginBottom: 16 }}>概览</Title>
-
       <Row gutter={[16, 16]}>
         <Col xs={12} sm={6}>
           <Card hoverable style={statCardStyle}>

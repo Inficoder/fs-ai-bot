@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import { Layout, Menu, Button, Grid, Drawer, Typography, Flex, theme } from 'antd'
 import {
@@ -14,6 +14,7 @@ import Config from './pages/Config'
 import ChatLogs from './pages/ChatLogs'
 
 const { Header, Sider, Content } = Layout
+const { Title } = Typography
 const { useBreakpoint } = Grid
 
 const menuItems = [
@@ -21,6 +22,12 @@ const menuItems = [
   { key: '/config', icon: <SettingOutlined />, label: '配置管理' },
   { key: '/logs', icon: <MessageOutlined />, label: '对话日志' },
 ]
+
+const pageTitles: Record<string, string> = {
+  '/': '概览',
+  '/config': '配置管理',
+  '/logs': '对话日志',
+}
 
 function BrandLogo({ collapsed }: { collapsed: boolean }) {
   const { token } = theme.useToken()
@@ -50,6 +57,7 @@ export default function App() {
   const { token } = theme.useToken()
 
   const isMobile = !screens.lg
+  const pageTitle = pageTitles[location.pathname] ?? ''
 
   const onCollapse = useCallback((val: boolean) => {
     setCollapsed(val)
@@ -115,21 +123,24 @@ export default function App() {
 
       <Layout>
         <Header style={headerStyle}>
-          {isMobile ? (
-            <Button
-              type="text"
-              icon={<MenuUnfoldOutlined />}
-              onClick={() => setDrawerOpen(true)}
-            />
-          ) : (
-            <Button
-              type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
-            />
-          )}
+          <Flex align="center" gap={8}>
+            {isMobile ? (
+              <Button
+                type="text"
+                icon={<MenuUnfoldOutlined />}
+                onClick={() => setDrawerOpen(true)}
+              />
+            ) : (
+              <Button
+                type="text"
+                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                onClick={() => setCollapsed(!collapsed)}
+              />
+            )}
+            <Title level={5} style={{ margin: 0 }}>{pageTitle}</Title>
+          </Flex>
         </Header>
-        <Content style={{ padding: '16px 24px', minHeight: 280 }}>
+        <Content style={{ padding: 24, minHeight: 280 }}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/config" element={<Config />} />

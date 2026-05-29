@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Form, Input, InputNumber, Button, message, Spin, Typography, Space, Affix, theme, Collapse } from 'antd'
+import { Form, Input, InputNumber, Button, message, Spin, Space, Affix, theme, Collapse } from 'antd'
 import {
   SaveOutlined,
   ApiOutlined,
@@ -9,8 +9,6 @@ import {
   CloudServerOutlined,
 } from '@ant-design/icons'
 import { getConfig, saveConfig, type AppConfig } from '../api'
-
-const { Title } = Typography
 
 const MASKED = '****'
 
@@ -178,8 +176,6 @@ export default function Config() {
 
   return (
     <div style={{ maxWidth: 720 }}>
-      <Title level={4} style={{ marginBottom: 16 }}>配置管理</Title>
-
       <Form form={form} layout="vertical" onFinish={handleSave}>
         <Collapse
           defaultActiveKey={['feishu', 'deepseek']}
