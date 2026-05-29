@@ -6,9 +6,14 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const DATA_DIR = path.resolve(__dirname, '..', 'data')
+const PKG_DIR = path.resolve(__dirname, '..')
+const DATA_DIR = path.join(PKG_DIR, 'data')
 const PID_PATH = path.join(DATA_DIR, 'imbot-cli.pid')
 const LOG_PATH = path.join(DATA_DIR, 'imbot-cli.log')
+
+function readPkg(): { version: string } {
+  return JSON.parse(fs.readFileSync(path.join(PKG_DIR, 'package.json'), 'utf-8'))
+}
 
 function readPid(): number | null {
   try {
@@ -33,7 +38,7 @@ const program = new Command()
 program
   .name('imbot-cli')
   .description('IM AI 辅助平台 — 多平台即时通讯 AI 机器人')
-  .version('0.1.0')
+  .version(readPkg().version)
 
 program
   .command('start')
